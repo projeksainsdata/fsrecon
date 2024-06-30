@@ -69,7 +69,7 @@ const themeConfigSlice = createSlice({
     name: 'auth',
     initialState: initialState,
     reducers: {
-        
+
         toggleTheme(state, { payload }) {
             payload = payload || state.theme; // light | dark | system
             localStorage.setItem('theme', payload);
@@ -135,7 +135,7 @@ const themeConfigSlice = createSlice({
         },
 
         setPageTitle(state, { payload }) {
-            document.title = `${payload} | FSRECON - Multipurpose Tailwind Dashboard Template`;
+            document.title = `${payload} | FSRECON - Faculty of Science ITERA`;
         },
     },
 });

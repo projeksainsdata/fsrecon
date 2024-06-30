@@ -7,17 +7,73 @@ import IconUser from '../components/Icon/IconUser';
 import IconMail from '../components/Icon/IconMail';
 import IconLockDots from '../components/Icon/IconLockDots';
 
+import { axiosAuth } from '../services/axios';
+import { login } from '../store/authSlice';
+import useFormData from '../hooks/useForm';
+import { showNotif } from '../store/notifSlice';
+import LoadingButton from '../components/Loading/LoadingButton';
 
 const Register = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setPageTitle('Register'));
     });
+
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
     const isDark = useSelector((state: IRootState) => state.themeConfig.theme === 'dark' || state.themeConfig.isDarkMode);
+    const { data, handleChange } = useFormData({
+        fullname: '',
+        email: '',
+        password: '',
+        password2: '',
+    });
+    const submitForm = async (e) => {
+        e.preventDefault();
+        // register logic
+        try {
+            // set loading to true
+            setLoading(true);
+            // check if data not null
+            if (!data.fullname && !data.email && !data.password && !data.password2) {
+                dispatch(showNotif({ message: 'All field is required', type: 'error' }));
+                setLoading(false);
+                return;
+            }
+            if (data.password !== data.password2) {
+                dispatch(showNotif({ message: 'Password not match', type: 'error' }));
+                setLoading(false);
+                return;
+            }
+            const response = await axiosAuth.post('api/register', {
+                fullname: data.fullname,
+                email: data.email,
+                password: data.password,
+                password2: data.password2,
+            });
 
-    const submitForm = () => {
-        navigate('/');
+            //    login after register
+            const responseLogin = await axiosAuth.post('api/login', {
+                email: data.email,
+                password: data.password,
+            });
+
+            dispatch(login({ jwt: responseLogin.data.data }));
+            dispatch(showNotif({ message: `Login Success`, type: 'success' }));
+            setLoading(false);
+
+            navigate('/');
+        } catch (error) {
+            // check if error from a
+            if (error.response) {
+                dispatch(showNotif({ message: error.response.data.message, type: 'error' }));
+            }
+            setLoading(false);
+        } finally {
+            setLoading(false);
+            // set loading to false
+        }
     };
 
     return (
@@ -34,51 +90,59 @@ const Register = () => {
                     <div className="relative flex flex-col justify-center rounded-md bg-white/60 backdrop-blur-lg dark:bg-black/50 px-6 lg:min-h-[758px] py-20">
                         <div className="mx-auto w-full max-w-[440px]">
                             <div className="mb-10">
-                                <img alt='Logo Faculty of Science ITERA' src='/assets/images/auth/Logo-FSains.png' />
+                                <img alt="Logo Faculty of Science ITERA" src="/assets/images/auth/Logo-FSains.png" />
                                 <h1 className="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">FSRECON Register</h1>
                                 <p className="text-base font-bold leading-normal text-white-dark">Enter your email and password to register</p>
                             </div>
                             <form className="space-y-5 dark:text-white" onSubmit={submitForm}>
                                 <div>
-                                    <label htmlFor="Name">Full Name</label>
+                                    <label htmlFor="fullname">Full Name</label>
                                     <div className="relative text-white-dark">
-                                        <input id="Name" type="text" placeholder="Enter Name" className="form-input ps-10 placeholder:text-white-dark" />
+                                        <input id="fullname" type="text" placeholder="Enter Name" onChange={handleChange} className="form-input ps-10 placeholder:text-white-dark" />
                                         <span className="absolute start-4 top-1/2 -translate-y-1/2">
                                             <IconUser fill={true} />
                                         </span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label htmlFor="Email">Email</label>
+                                    <label htmlFor="email">Email</label>
                                     <div className="relative text-white-dark">
-                                        <input id="Email" type="email" placeholder="Enter Email" className="form-input ps-10 placeholder:text-white-dark" />
+                                        <input id="email" type="email" placeholder="Enter Email" onChange={handleChange} className="form-input ps-10 placeholder:text-white-dark" />
                                         <span className="absolute start-4 top-1/2 -translate-y-1/2">
                                             <IconMail fill={true} />
                                         </span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label htmlFor="Password">Password</label>
+                                    <label htmlFor="password">Password</label>
                                     <div className="relative text-white-dark">
-                                        <input id="Password" type="password" placeholder="Enter Password" className="form-input ps-10 placeholder:text-white-dark" />
+                                        <input id="password" type="password" placeholder="Enter Password" onChange={handleChange} className="form-input ps-10 placeholder:text-white-dark" />
                                         <span className="absolute start-4 top-1/2 -translate-y-1/2">
                                             <IconLockDots fill={true} />
                                         </span>
                                     </div>
                                 </div>
-                                <button type="submit" className="btn btn-primary !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
-                                    Register
+
+                                <div>
+                                    <label htmlFor="password2">Password Confirm</label>
+                                    <div className="relative text-white-dark">
+                                        <input id="password2" type="password" placeholder="Enter Password" onChange={handleChange} className="form-input ps-10 placeholder:text-white-dark" />
+                                        <span className="absolute start-4 top-1/2 -translate-y-1/2">
+                                            <IconLockDots fill={true} />
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="submit" className="btn btn-primary !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]" disabled={loading}>
+                                    {loading ? <LoadingButton /> : 'Register'}
                                 </button>
                             </form>
-                            <div className="mb-10 md:mb-[60px]">
-                            </div>
+                            <div className="mb-10 md:mb-[60px]"></div>
                             <div className="relative flex gap-4 items-center justify-between">
-
                                 <Link to="/login" className="btn-login btn-secondary w-full border-0 shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                     Cancel
                                 </Link>
-                                <Link to="/auth/boxed-signup" className="btn-login btn-secondary w-full border-0 shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
-                                        Forgot Your Login Detail ?
+                                <Link to="/forgot-password" className="btn-login btn-secondary w-full border-0 shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                                    Forgot Your Login Detail ?
                                 </Link>
                             </div>
                         </div>

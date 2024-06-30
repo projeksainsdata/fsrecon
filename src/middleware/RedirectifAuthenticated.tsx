@@ -1,14 +1,18 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { IRootState } from '../store';
 
 interface RedirectIfAuthenticatedProps {
-  Component: React.ComponentType;
+    Component: React.ComponentType;
 }
 
 function RedirectIfAuthenticated({ Component }: RedirectIfAuthenticatedProps) {
-  if (localStorage.getItem("token")) {
-    return <Navigate to="/dashboard" />;
-  }
-  return <Component />;
+    const isAuthenticated = useSelector((state: IRootState) => state.auth.isAuthenticated);
+    if (isAuthenticated) {
+        return <Navigate to="/" />;
+    }
+
+    return <Component />;
 }
 export default RedirectIfAuthenticated;
