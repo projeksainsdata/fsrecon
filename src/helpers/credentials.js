@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from './cookies.js';
+import { getCookie, setCookie } from './cookies';
 import { jwtDecode } from 'jwt-decode';
 import axios from '../services/axios';
 // check jwt token is expired or not

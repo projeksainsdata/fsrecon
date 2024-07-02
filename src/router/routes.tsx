@@ -6,6 +6,13 @@ import Register from '../pages/register';
 const Index = lazy(() => import('../pages/Index'));
 
 const routes = [
+        // dashboard
+    //{
+    //    path: '/',
+    //    element: <Index />,
+    //    layout: 'default',
+    //}
+
     // login
     {
         path: '/login',
@@ -24,6 +31,8 @@ const routes = [
         element: <RequireAuth Component={Index} />,
         layout: 'default',
     },
+
+
 
 ];
 

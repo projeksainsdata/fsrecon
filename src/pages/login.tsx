@@ -1,21 +1,25 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '@/store';
+import { IRootState } from '../store';
 import { useEffect, useState } from 'react';
-import { setPageTitle, toggleRTL } from '@/store/themeConfigSlice';
-import { login } from '@/store/authSlice';
-import IconMail from '@/components/Icon/IconMail';
-import IconLockDots from '@/components/Icon/IconLockDots';
-import useFormData from '@/hooks/useForm';
-import { axiosAuth } from '@/services/axios';
-import { showNotif } from '@/store/notifSlice';
+import { setPageTitle } from '../store/themeConfigSlice';
+import { login } from '../store/authSlice';
+import IconMail from '../components/Icon/IconMail';
+import IconLockDots from '../components/Icon/IconLockDots';
+import useFormData from '../hooks/useForm';
+import { axiosAuth } from '../services/axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LoadingButton from '../components/Loading/LoadingButton';
+
+
 
 const Login = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setPageTitle('Login'));
-    }, []);
+    }, [dispatch]);
+
     const navigate = useNavigate();
     const isDark = useSelector((state: IRootState) => state.themeConfig.theme === 'dark' || state.themeConfig.isDarkMode);
     const [loading, setLoading] = useState(false);
@@ -24,47 +28,48 @@ const Login = () => {
         email: '',
         password: '',
     });
-    const submitForm = async (e) => {
-        e.preventDefault();
 
-        // login logic
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
-            // set loading to true
             setLoading(true);
-            // check if data not null
-            if (!data.email && !data.password) {
-                dispatch(showNotif({ message: 'Email and Password is required', type: 'error' }));
+    
+            if (!data.email || !data.password) {
+                toast.error('Email and Password are required');
                 setLoading(false);
                 return;
             }
+    
             const response = await axiosAuth.post('/api/login', {
                 email: data.email,
                 password: data.password,
             });
-
-            dispatch(login({ jwt: response.data.data }));
-
-            dispatch(showNotif({ message: `Login Success`, type: 'success' }));
-            setLoading(false);
-            navigate('/');
-        } catch (error) {
-            // check if error from api
-            if (error.response) {
-                dispatch(showNotif({ message: error.response.data.message, type: 'error' }));
+    
+            if (response.data && response.data.data) {
+                dispatch(login({ jwt: response.data.data }));
+                toast.success('Login Success');
+                navigate('/');
+            } else {
+                toast.error('Login failed. Please try again.');
             }
-            setLoading(false);
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
         } finally {
             setLoading(false);
-            // set loading to false
         }
     };
+    
 
     return (
         <div>
+            <ToastContainer />
             <div className="absolute inset-0">
                 <img src="/assets/images/auth/bg-gradient.png" alt="image" className="h-full w-full object-cover" />
             </div>
-
             <div className="relative flex min-h-screen items-center justify-center bg-[url(/assets/images/auth/gedungf.png)] bg-cover bg-center bg-no-repeat px-6 py-10 dark:bg-[#060818] sm:px-16">
                 <img src="/assets/images/auth/coming-soon-object1.png" alt="image" className="absolute left-0 top-1/2 h-full max-h-[893px] -translate-y-1/2" />
                 <img src="/assets/images/auth/coming-soon-object3.png" alt="image" className="absolute right-0 top-0 h-[300px]" />
@@ -74,7 +79,7 @@ const Login = () => {
                         <div className="mx-auto w-full max-w-[440px]">
                             <div className="mb-10">
                                 <img alt="Logo Faculty of Science ITERA" src="/assets/images/auth/Logo-FSains.png" />
-                                <h1 className="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">FSRECON LOGIN</h1>
+                                <h1 className="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-3xl">FSRECON MANAGER LOGIN</h1>
                                 <p className="text-base font-bold leading-normal text-white-dark">Enter your email and password to login</p>
                             </div>
                             <form className="space-y-5 dark:text-white" onSubmit={submitForm}>

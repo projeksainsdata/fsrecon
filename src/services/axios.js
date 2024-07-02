@@ -1,10 +1,11 @@
 import axios from 'axios';
 import getCredentials from '@/helpers/credentials';
-import config from '@/config';
 
-const { API_URL } = config;
+// Assuming the environment variable is set as VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL;
+
 const axiosApiInstance = axios.create({
-    baseURL:API_URL,
+    baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -15,7 +16,7 @@ axiosApiInstance.interceptors.request.use(
     async (config) => {
         const value = await getCredentials();
         if (!value) {
-            throw new Error('not login');
+            throw new Error('Not logged in');
         }
 
         config.headers = {
@@ -24,7 +25,7 @@ axiosApiInstance.interceptors.request.use(
         return config;
     },
     (error) => {
-        Promise.reject(error);
+        return Promise.reject(error);
     }
 );
 
@@ -33,16 +34,16 @@ axiosApiInstance.interceptors.response.use(
     (response) => {
         return response;
     },
-    async function (error) {
+    async (error) => {
         const originalRequest = error.config;
         if (error.response.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
-            const access_token = await getCredentials();
-            if (!access_token) {
+            const accessToken = await getCredentials();
+            if (!accessToken) {
                 return Promise.reject(error);
             }
 
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token.access;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken.access;
             return axiosApiInstance(originalRequest);
         }
         return Promise.reject(error);
@@ -50,7 +51,7 @@ axiosApiInstance.interceptors.response.use(
 );
 
 export const axiosAuth = axios.create({
-    baseURL:API_URL,
+    baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
