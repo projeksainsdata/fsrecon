@@ -1,6 +1,6 @@
 // In your auth slice file
 import { createSlice } from '@reduxjs/toolkit';
-import { getJwt, setCredentials, getUser } from '@/helpers/credentials';
+import { getJwt, setCredentials, getUser } from '../helpers/credentials';
 const initialState = {
     isAuthenticated: !!getJwt(),
     user: getUser() || null,

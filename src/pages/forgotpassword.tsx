@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl' ? true : false;
 
     const submitForm = () => {
-        navigate('/');
+        navigate('/login');
     };
 
     return (
