@@ -29,7 +29,7 @@ const Register = () => {
         password: '',
         password2: '',
     });
-    const submitForm = async (e) => {
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // register logic
         try {
@@ -64,7 +64,7 @@ const Register = () => {
             setLoading(false);
 
             navigate('/verifyemail');
-        } catch (error) {
+        } catch (error: any) {
             // check if error from a
             if (error.response) {
                 dispatch(showNotif({ message: error.response.data.message, type: 'error' }));
