@@ -141,7 +141,7 @@ const Register = () => {
                                 <Link to="/login" className="btn-login btn-secondary w-full border-0 shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                     Cancel
                                 </Link>
-                                <Link to="/forgotpassword" className="btn-login btn-secondary w-full border-0 shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                                <Link to="/forgot-password" className="btn-login btn-secondary w-full border-0 shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                     Forgot Your Login Detail ?
                                 </Link>
                             </div>

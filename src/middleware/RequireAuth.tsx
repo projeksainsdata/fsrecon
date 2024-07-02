@@ -9,6 +9,7 @@ interface RequireAuthProps {
 
 function RequireAuth({ Component }: RequireAuthProps) {
     const isAuthenticated = useSelector((state: IRootState) => state.auth.isAuthenticated);
+    console.log(isAuthenticated);
     if (!isAuthenticated) {
         return <Navigate to="/login" />;
     }

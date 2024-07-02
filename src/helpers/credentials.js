@@ -83,7 +83,7 @@ async function getVerifiedKeys(keys) {
 
 // get credentials from cookies
 
-export const getJwt = (key) => {
+export const getJwt = () => {
     try {
         const keys = getCookie('keys');
         if (keys) {
@@ -94,6 +94,10 @@ export const getJwt = (key) => {
     } catch (e) {
         return null;
     }
+};
+
+export const removeCredentials = () => {
+    setCookie('keys', '', -1);
 };
 
 const getCredentials = async () => {
@@ -113,6 +117,20 @@ const getCredentials = async () => {
     } catch (e) {
         return null;
     }
+};
+
+export const isAuth = () => {
+    // get jwt
+    let jwt = getJwt('keys');
+
+    if (!jwt) {
+        return false;
+    }
+    // check jwt is expired or not
+    if (isTokenExpired(jwt.access)) {
+        return false;
+    }
+    return true;
 };
 
 export default getCredentials;

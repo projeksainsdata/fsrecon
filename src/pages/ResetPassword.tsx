@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { setPageTitle } from '../store/themeConfigSlice';
@@ -7,49 +7,50 @@ import useFormData from '../hooks/useForm';
 import { axiosAuth } from '../services/axios';
 import { showNotif } from '../store/notifSlice';
 import LoadingButton from '../components/Loading/LoadingButton';
+import { AxiosError } from 'axios';
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(setPageTitle('Recover Id Box'));
+        dispatch(setPageTitle('Reset Password'));
     }, []);
     const navigate = useNavigate();
     const { data, handleChange } = useFormData({
-        email: '',
+        password: '',
+        password2: '',
     });
-    const [isSending, setIsSending] = useState(false);
+    // get params ?token
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const token = searchParams.get('token');
+
     const [loading, setLoading] = useState(false);
     const submitForm = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            await axiosAuth.post('api/forgot-password', data);
             setLoading(false);
-            setIsSending(true);
+            const response = await axiosAuth.post('api/reset-password', { ...data, token });
             dispatch(
                 showNotif({
                     type: 'success',
-                    message: 'Password reset link has been sent to your email. Please check your email.',
+                    message: 'Password reset successfully',
                 })
             );
+
+            // navigate to login
+            navigate('/login');
         } catch (error) {
-            setLoading(false);
-        }
-    };
-    const resendEmail = async () => {
-        setIsSending(false);
-        setLoading(true);
-        try {
-            await axiosAuth.post('api/forgot-password', data);
-            setLoading(false);
-            setIsSending(true);
-            dispatch(
-                showNotif({
-                    type: 'success',
-                    message: 'Password reset link has been sent to your email. Please check your email.',
-                })
-            );
-        } catch (error) {
+            // check error is axios error
+            if ((error as AxiosError).response) {
+                dispatch(
+                    showNotif({
+                        type: 'error',
+                        message: (error as AxiosError).response?.data.message,
+                    })
+                );
+            }
+
             setLoading(false);
         }
     };
@@ -69,34 +70,33 @@ const ForgotPassword = () => {
                         <div className="mx-auto w-full max-w-[440px]">
                             <div className="mb-7">
                                 <h1 className="mb-3 text-2xl font-bold !leading-snug dark:text-white">Password Reset</h1>
-                                <p>Enter your email to recover your ID</p>
+                                <p>Reset Your Password</p>
                             </div>
-                            {isSending && (
-                                <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
-                                    <p className="font-bold">Success</p>
-                                    <p>Password reset link has been sent to your {data.email}. Please check your email inbox \ spam.</p>
-                                    {/* resend email */}
-                                    <p>
-                                        Didn't receive an email?{' '}
-                                        <button className="text-blue-500 dark:text-blue-400" onClick={resendEmail}>
-                                            Resend Email
-                                        </button>
-                                    </p>
-                                </div>
-                            )}
+
                             <form className="space-y-5" onSubmit={submitForm}>
                                 <div>
-                                    <label htmlFor="email" className="dark:text-white">
-                                        Email
+                                    <label htmlFor="password" className="dark:text-white">
+                                        new Password
                                     </label>
                                     <div className="relative text-white-dark">
-                                        <input id="email" type="email" onChange={handleChange} placeholder="Enter Email" className="form-input ps-10 placeholder:text-white-dark" />
+                                        <input id="password" type="password" onChange={handleChange} placeholder="Enter Email" className="form-input ps-10 placeholder:text-white-dark" />
                                         <span className="absolute start-4 top-1/2 -translate-y-1/2">
                                             <IconMail fill={true} />
                                         </span>
                                     </div>
                                 </div>
-                                <button type="submit" disabled={isSending} className="btn btn-primary !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                                <div>
+                                    <label htmlFor="password2" className="dark:text-white">
+                                        Password confirm
+                                    </label>
+                                    <div className="relative text-white-dark">
+                                        <input id="password2" type="password" onChange={handleChange} placeholder="Enter Email" className="form-input ps-10 placeholder:text-white-dark" />
+                                        <span className="absolute start-4 top-1/2 -translate-y-1/2">
+                                            <IconMail fill={true} />
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="submit" disabled={loading} className="btn btn-primary !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                     {loading ? <LoadingButton /> : 'Send Email'}
                                 </button>
                             </form>
@@ -108,4 +108,4 @@ const ForgotPassword = () => {
     );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

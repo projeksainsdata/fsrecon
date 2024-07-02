@@ -1,9 +1,8 @@
 import axios from 'axios';
 import getCredentials from '@/helpers/credentials';
+import config from '../config';
 
-// Assuming the environment variable is set as VITE_API_URL
-const API_URL = import.meta.env.VITE_API_URL;
-
+const { API_URL } = config;
 const axiosApiInstance = axios.create({
     baseURL: API_URL,
     headers: {

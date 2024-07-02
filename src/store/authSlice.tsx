@@ -1,10 +1,10 @@
 // In your auth slice file
 import { createSlice } from '@reduxjs/toolkit';
-import { getJwt, setCredentials, getUser } from '@/helpers/credentials';
+import { getJwt, setCredentials, getUser, removeCredentials, isAuth } from '@/helpers/credentials';
 const initialState = {
-    isAuthenticated: !!getJwt(),
+    isAuthenticated: isAuth() || false,
     user: getUser() || null,
-    jwt: getJwt(),
+    jwt: getJwt() || null,
 };
 
 const authSlice = createSlice({
@@ -19,8 +19,10 @@ const authSlice = createSlice({
         },
         logout: (state) => {
             state.isAuthenticated = false;
-            state.user = null;
+            // remove credentials
+            removeCredentials();
             state.jwt = null;
+            state.user = null;
         },
     },
 });
