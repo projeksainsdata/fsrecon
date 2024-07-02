@@ -104,7 +104,7 @@ const Login = () => {
 
                                 <div className="text-center dark:text-white">
                                     Forgot Password ?&nbsp;
-                                    <Link to="/auth/boxed-signup" className="text-primary underline transition hover:text-black dark:hover:text-white">
+                                    <Link to="/forgotpassword" className="text-primary underline transition hover:text-black dark:hover:text-white">
                                         Send Login Detail
                                     </Link>
                                 </div>
