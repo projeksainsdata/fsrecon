@@ -25,7 +25,7 @@ import IconMenuDatatables from '../Icon/Menu/IconMenuDatatables';
 import IconMenuForms from '../Icon/Menu/IconMenuForms';
 import IconMenuPages from '../Icon/Menu/IconMenuPages';
 import IconMenuMore from '../Icon/Menu/IconMenuMore';
-import { logout } from '@/store/authSlice';
+import { logout } from '../../store/authSlice';
 import IconLayoutGrid from '../Icon/IconLayoutGrid';
 import axiosApiInstance from '@/services/axios';
 
@@ -97,12 +97,12 @@ const Header = () => {
                     <div className="ltr:mr-2 rtl:ml-2 hidden sm:block">
                         <ul className="flex items-center space-x-2 rtl:space-x-reverse dark:text-[#d0d2d6]">
                             <li>
-                                <Link to="/apps/calendar" className="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
+                                <Link to="/calendar" className="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
                                     <IconCalendar />
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/apps/todolist" className="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
+                                <Link to="/todolist" className="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
                                     <IconLayoutGrid />
                                 </Link>
                             </li>
@@ -202,46 +202,8 @@ const Header = () => {
                                             {notifications.length ? <span className="badge bg-primary/80">{notifications.length}New</span> : ''}
                                         </div>
                                     </li>
-                                    {notifications.length > 0 ? (
+
                                         <>
-                                            {notifications.map((notification) => {
-                                                return (
-                                                    <li key={notification.id} className="dark:text-white-light/90" onClick={(e) => e.stopPropagation()}>
-                                                        <div className="group flex items-center px-4 py-2">
-                                                            <div className="grid place-content-center rounded">
-                                                                <div className="w-12 h-12 relative">
-                                                                    <img className="w-12 h-12 rounded-full object-cover" alt="profile" src={`/assets/images/${notification.profile}`} />
-                                                                    <span className="bg-success w-2 h-2 rounded-full block absolute right-[6px] bottom-0"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ltr:pl-3 rtl:pr-3 flex flex-auto">
-                                                                <div className="ltr:pr-3 rtl:pl-3">
-                                                                    <h6
-                                                                        dangerouslySetInnerHTML={{
-                                                                            __html: notification.message,
-                                                                        }}
-                                                                    ></h6>
-                                                                    <span className="text-xs block font-normal dark:text-gray-500">{notification.time}</span>
-                                                                </div>
-                                                                <button
-                                                                    type="button"
-                                                                    className="ltr:ml-auto rtl:mr-auto text-neutral-300 hover:text-danger opacity-0 group-hover:opacity-100"
-                                                                    onClick={() => removeNotification(notification.id)}
-                                                                >
-                                                                    <IconXCircle />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            })}
-                                            <li>
-                                                <div className="p-4">
-                                                    <button className="btn btn-primary block w-full btn-small">Read All Notifications</button>
-                                                </div>
-                                            </li>
-                                        </>
-                                    ) : (
                                         <li onClick={(e) => e.stopPropagation()}>
                                             <button type="button" className="!grid place-content-center hover:!bg-transparent text-lg min-h-[200px]">
                                                 <div className="mx-auto ring-4 ring-primary/30 rounded-full mb-4 text-primary">
@@ -250,7 +212,8 @@ const Header = () => {
                                                 No data available.
                                             </button>
                                         </li>
-                                    )}
+                                        </>
+
                                 </ul>
                             </Dropdown>
                         </div>

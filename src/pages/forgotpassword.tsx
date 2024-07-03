@@ -19,7 +19,7 @@ const ForgotPassword = () => {
     });
     const [isSending, setIsSending] = useState(false);
     const [loading, setLoading] = useState(false);
-    const submitForm = async (e) => {
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         try {

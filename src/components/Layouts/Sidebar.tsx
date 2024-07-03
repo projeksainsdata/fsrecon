@@ -121,10 +121,10 @@ const Sidebar = () => {
                                             <NavLink to="/">{t('For Your Information')}</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/analytics">{t('Conference')}</NavLink>
+                                            <NavLink to="/conference">{t('Conference')}</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/finance">{t('Networking')}</NavLink>
+                                            <NavLink to="/networking">{t('Networking')}</NavLink>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
@@ -152,19 +152,19 @@ const Sidebar = () => {
                                         <AnimateHeight duration={300} height={currentMenu === 'new submissions' ? 'auto' : 0}>
                                             <ul className="sub-menu text-gray-500">
                                                 <li>
-                                                    <NavLink to="/apps/invoice/list">{t('Submit New Manuscript')}</NavLink>
+                                                    <NavLink to="/new/submit">{t('Submit New Manuscript')}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/preview">{t('Submissions Sent Back to Author ')}</NavLink>
+                                                    <NavLink to="/new/back">{t('Submissions Sent Back to Author ')}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/add">{t('Incomplete Submissions')}</NavLink>
+                                                    <NavLink to="/new/incomplete">{t('Incomplete Submissions')}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/edit">{t("Submissions Waiting for Author's Approval")}</NavLink>
+                                                    <NavLink to="/new/waiting">{t("Submissions Waiting for Author's Approval")}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/edit">{t("Submissions Being Processed")}</NavLink>
+                                                    <NavLink to="/new/process">{t("Submissions Being Processed")}</NavLink>
                                                 </li>
                                             </ul>
                                         </AnimateHeight>
@@ -184,22 +184,22 @@ const Sidebar = () => {
                                         <AnimateHeight duration={300} height={currentMenu === 'revisions' ? 'auto' : 0}>
                                             <ul className="sub-menu text-gray-500">
                                                 <li>
-                                                    <NavLink to="/apps/invoice/list">{t('Submissions Needing Revision')}</NavLink>
+                                                    <NavLink to="/revision/submit">{t('Submissions Needing Revision')}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/preview">{t('Revisions Sent Back to Author')}</NavLink>
+                                                    <NavLink to="/revision/back">{t('Revisions Sent Back to Author')}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/add">{t('Incomplete Submissions Being Revised')}</NavLink>
+                                                    <NavLink to="/revision/incomplete">{t('Incomplete Submissions Being Revised')}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/edit">{t("Revisions Waiting for Author's Approval")}</NavLink>
+                                                    <NavLink to="/revision/waiting-approval">{t("Revisions Waiting for Author's Approval")}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/edit">{t("Revisions Being Processed")}</NavLink>
+                                                    <NavLink to="/revision/process">{t("Revisions Being Processed")}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/edit">{t("Declined Revisions")}</NavLink>
+                                                    <NavLink to="/revision/declined">{t("Declined Revisions")}</NavLink>
                                                 </li>
                                             </ul>
                                         </AnimateHeight>
@@ -219,10 +219,10 @@ const Sidebar = () => {
                                         <AnimateHeight duration={300} height={currentMenu === 'completed' ? 'auto' : 0}>
                                             <ul className="sub-menu text-gray-500">
                                                 <li>
-                                                    <NavLink to="/apps/invoice/list">{t('Submissions with a Decision')}</NavLink>
+                                                    <NavLink to="/completed/decision">{t('Submissions with a Decision')}</NavLink>
                                                 </li>
                                                 <li>
-                                                    <NavLink to="/apps/invoice/preview">{t('Submissions with Production Completed')}</NavLink>
+                                                    <NavLink to="/completed/production">{t('Submissions with Production Completed')}</NavLink>
                                                 </li>
                                             </ul>
                                         </AnimateHeight>
@@ -250,20 +250,23 @@ const Sidebar = () => {
                                 <AnimateHeight duration={300} height={currentMenu === 'about' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <NavLink to="/components/tabs">{t('tabs')}</NavLink>
+                                            <NavLink to="/about">{t('Overview')}</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/components/accordions">{t('accordions')}</NavLink>
+                                            <NavLink to="/about/instruction">{t('Instructions for Authors')}</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/components/modals">{t('modals')}</NavLink>
+                                            <NavLink to="/about/contact">{t('Contact')}</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/about/policies">{t('Privacy and Policy')}</NavLink>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
                             </li>
 
                             <li className="menu nav-item">
-                                <NavLink to="/charts" className="group">
+                                <NavLink to="/listofjournal" className="group">
                                     <div className="flex items-center">
                                         <IconListCheck duotone fill className="group-hover:!text-primary shrink-0" />
                                         <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('List of Journal')}</span>
@@ -272,7 +275,7 @@ const Sidebar = () => {
                             </li>
 
                             <li className="menu nav-item">
-                                <NavLink to="/charts" className="group">
+                                <NavLink to="/calender" className="group">
                                     <div className="flex items-center">
                                         <IconCalendar duotone fill className="group-hover:!text-primary shrink-0" />
                                         <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Calender')}</span>
@@ -286,7 +289,7 @@ const Sidebar = () => {
                             </h2>
 
                             <li className="menu nav-item">
-                                <NavLink to="/tables" className="group">
+                                <NavLink to="/billing" className="group">
                                     <div className="flex items-center">
                                         <IconCreditCard duotone fill className="group-hover:!text-primary shrink-0" />
                                         <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Payments')}</span>
@@ -295,30 +298,30 @@ const Sidebar = () => {
                             </li>
 
                             <li className="menu nav-item">
-                                <button type="button" className={`${currentMenu === 'ticket' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('ticket')}>
+                                <button type="button" className={`${currentMenu === 'tickets' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('tickets')}>
                                     <div className="flex items-center">
                                         <IconDollarSignCircle duotone fill className="group-hover:!text-primary shrink-0" />
                                         <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Tickets')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'datalabel' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                    <div className={currentMenu !== 'tickets' ? 'rtl:rotate-90 -rotate-90' : ''}>
                                         <IconCaretDown />
                                     </div>
                                 </button>
 
-                                <AnimateHeight duration={300} height={currentMenu === 'ticket' ? 'auto' : 0}>
+                                <AnimateHeight duration={300} height={currentMenu === 'tickets' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <NavLink to="/datatables/basic">{t('basic')}</NavLink>
+                                            <NavLink to="/invoice">{t('Invoice')}</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/datatables/advanced">{t('advanced')}</NavLink>
+                                            <NavLink to="/tickets">{t('Your Packaged')}</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/datatables/skin">{t('skin')}</NavLink>
+                                            <NavLink to="/tickets-history">{t('History')}</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/datatables/order-sorting">{t('order_sorting')}</NavLink>
+                                            <NavLink to="/refund">{t('Refund')}</NavLink>
                                         </li>
                                     </ul>
                                 </AnimateHeight>
@@ -330,7 +333,7 @@ const Sidebar = () => {
                             </h2>
 
                             <li className="menu nav-item">
-                                <NavLink to="/tables" className="group">
+                                <NavLink to="/knowledgebase" className="group">
                                     <div className="flex items-center">
                                         <IconMenuTables className="group-hover:!text-primary shrink-0" />
                                         <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Knowledgebase')}</span>
@@ -345,7 +348,7 @@ const Sidebar = () => {
                                         <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Video Tutorials')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'datalabel' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                    <div className={currentMenu !== 'video tutorial' ? 'rtl:rotate-90 -rotate-90' : ''}>
                                         <IconCaretDown />
                                     </div>
                                 </button>
@@ -353,16 +356,10 @@ const Sidebar = () => {
                                 <AnimateHeight duration={300} height={currentMenu === 'video tutorial' ? 'auto' : 0}>
                                     <ul className="sub-menu text-gray-500">
                                         <li>
-                                            <NavLink to="/datatables/basic">{t('basic')}</NavLink>
+                                            <NavLink to="/video/systems">{t('How to')}</NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/datatables/advanced">{t('advanced')}</NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/datatables/skin">{t('skin')}</NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/datatables/order-sorting">{t('order_sorting')}</NavLink>
+                                            <NavLink to="/video/guide">{t('Guide')}</NavLink>
                                         </li>
                                     </ul>
                                 </AnimateHeight>

@@ -1,7 +1,7 @@
 import { IRootState } from '@/src/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { hideNotif } from '@/store/notifSlice';
+import { hideNotif } from '../../store/notifSlice';
 import { ToastContainer, toast } from 'react-toastify';
 function Toast() {
     const dispatch = useDispatch();

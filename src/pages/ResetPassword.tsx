@@ -8,6 +8,8 @@ import { axiosAuth } from '../services/axios';
 import { showNotif } from '../store/notifSlice';
 import LoadingButton from '../components/Loading/LoadingButton';
 import { AxiosError } from 'axios';
+import IconLock from '../components/Icon/IconLock';
+import { AnyARecord } from 'dns';
 
 const ResetPassword = () => {
     const dispatch = useDispatch();
@@ -25,7 +27,7 @@ const ResetPassword = () => {
     const token = searchParams.get('token');
 
     const [loading, setLoading] = useState(false);
-    const submitForm = async (e) => {
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         try {
@@ -40,18 +42,15 @@ const ResetPassword = () => {
 
             // navigate to login
             navigate('/login');
-        } catch (error) {
-            // check error is axios error
-            if ((error as AxiosError).response) {
-                dispatch(
-                    showNotif({
-                        type: 'error',
-                        message: (error as AxiosError).response?.data.message,
-                    })
-                );
+        } catch (error: any) {
+            // check if error from a
+            if (error.response) {
+                dispatch(showNotif({ message: error.response.data.message, type: 'error' }));
             }
-
             setLoading(false);
+        } finally {
+            setLoading(false);
+            // set loading to false
         }
     };
 
@@ -76,12 +75,12 @@ const ResetPassword = () => {
                             <form className="space-y-5" onSubmit={submitForm}>
                                 <div>
                                     <label htmlFor="password" className="dark:text-white">
-                                        new Password
+                                        New Password
                                     </label>
                                     <div className="relative text-white-dark">
-                                        <input id="password" type="password" onChange={handleChange} placeholder="Enter Email" className="form-input ps-10 placeholder:text-white-dark" />
+                                        <input id="password" type="password" onChange={handleChange} placeholder="Enter New Password" className="form-input ps-10 placeholder:text-white-dark" />
                                         <span className="absolute start-4 top-1/2 -translate-y-1/2">
-                                            <IconMail fill={true} />
+                                            <IconLock fill={true} />
                                         </span>
                                     </div>
                                 </div>
@@ -90,14 +89,14 @@ const ResetPassword = () => {
                                         Password confirm
                                     </label>
                                     <div className="relative text-white-dark">
-                                        <input id="password2" type="password" onChange={handleChange} placeholder="Enter Email" className="form-input ps-10 placeholder:text-white-dark" />
+                                        <input id="password2" type="password" onChange={handleChange} placeholder="Comfirm New Password" className="form-input ps-10 placeholder:text-white-dark" />
                                         <span className="absolute start-4 top-1/2 -translate-y-1/2">
-                                            <IconMail fill={true} />
+                                            <IconLock fill={true} />
                                         </span>
                                     </div>
                                 </div>
                                 <button type="submit" disabled={loading} className="btn btn-primary !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
-                                    {loading ? <LoadingButton /> : 'Send Email'}
+                                    {loading ? <LoadingButton /> : 'Login'}
                                 </button>
                             </form>
                         </div>

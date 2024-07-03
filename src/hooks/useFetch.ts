@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import axiosApiInstance from 'services/axios';
+import axios, { AxiosError } from 'axios'; // Import axios and AxiosError
+import axiosApiInstance from '../services/axios';
 
 interface FetchState<T> {
     loading: boolean;
@@ -41,8 +42,12 @@ export default function useFetchPagination<T>(): {
                 previous: response.data.previous,
                 count: response.data.count,
             });
-        } catch (error: any) {
-            setState({ ...state, loading: false, error: error.response.data });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setState({ ...state, loading: false, error: error.response?.data });
+            } else {
+                setState({ ...state, loading: false, error: 'An unknown error occurred' });
+            }
         }
     };
 
@@ -69,7 +74,11 @@ export function useFetch<T>(url: string): FetchState<T> & { fetch: () => Promise
                 data: response.data,
             });
         } catch (error) {
-            setState({ ...state, loading: false, error: error.response.data });
+            if (axios.isAxiosError(error)) {
+                setState({ ...state, loading: false, error: error.response?.data });
+            } else {
+                setState({ ...state, loading: false, error: 'An unknown error occurred' });
+            }
         }
     };
 
@@ -100,7 +109,11 @@ export function useFetchPost<T>(url: string, data: any): FetchState<T> & { fetch
                 data: response.data,
             });
         } catch (error) {
-            setState({ ...state, loading: false, error: error.response.data });
+            if (axios.isAxiosError(error)) {
+                setState({ ...state, loading: false, error: error.response?.data });
+            } else {
+                setState({ ...state, loading: false, error: 'An unknown error occurred' });
+            }
         }
     };
 
