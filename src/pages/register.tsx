@@ -63,7 +63,7 @@ const Register = () => {
             dispatch(showNotif({ message: `Login Success`, type: 'success' }));
             setLoading(false);
 
-            navigate('/verifyemail');
+            navigate('/verify-email');
         } catch (error: any) {
             // check if error from a
             if (error.response) {

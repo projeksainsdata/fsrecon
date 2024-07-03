@@ -52,6 +52,12 @@ const routes = [
         element: <RequireAuth Component={ConfirmEmail} />,
         layout: 'blank',
     },
+    // page not found
+    {
+        path: '*',
+        element: <RequireAuth Component={Index} />,
+        layout: 'default',
+    },
 ];
 
 export { routes };

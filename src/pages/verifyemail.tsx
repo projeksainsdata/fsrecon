@@ -18,7 +18,7 @@ const VerifyEmail = () => {
     const navigate = useNavigate();
     const user = useSelector((state: IRootState) => state.auth.user);
 
-    const submitForm = async (e) => {
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // verify email logic
         try {
@@ -42,7 +42,7 @@ const VerifyEmail = () => {
             );
             setIsSending(true);
             setLoading(false);
-        } catch (error) {
+        } catch (error:any) {
             // check if error from api
             if (error.response) {
                 dispatch(showNotif({ message: error.response.data.message, type: 'error' }));
@@ -73,7 +73,7 @@ const VerifyEmail = () => {
             );
             setIsSending(true);
             setLoading(false);
-        } catch (error) {
+        } catch (error:any) {
             // check if error from api
             if (error.response) {
                 dispatch(showNotif({ message: error.response.data.message, type: 'error' }));

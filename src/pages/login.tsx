@@ -1,14 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '@/store';
+import { IRootState } from '../store';
 import { useEffect, useState } from 'react';
-import { setPageTitle, toggleRTL } from '@/store/themeConfigSlice';
-import { login } from '@/store/authSlice';
-import IconMail from '@/components/Icon/IconMail';
-import IconLockDots from '@/components/Icon/IconLockDots';
-import useFormData from '@/hooks/useForm';
-import { axiosAuth } from '@/services/axios';
-import { showNotif } from '@/store/notifSlice';
+import { setPageTitle, toggleRTL } from '../store/themeConfigSlice';
+import { login } from '../store/authSlice';
+import IconMail from '../components/Icon/IconMail';
+import IconLockDots from '../components/Icon/IconLockDots';
+import useFormData from '../hooks/useForm';
+import { axiosAuth } from '../services/axios';
+import { showNotif } from '../store/notifSlice';
 import LoadingButton from '../components/Loading/LoadingButton';
 
 const Login = () => {
@@ -24,7 +24,7 @@ const Login = () => {
         email: '',
         password: '',
     });
-    const submitForm = async (e) => {
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         // login logic
@@ -47,7 +47,7 @@ const Login = () => {
             dispatch(showNotif({ message: `Login Success`, type: 'success' }));
             setLoading(false);
             navigate('/');
-        } catch (error) {
+        } catch (error:any) {
             // check if error from api
             if (error.response) {
                 dispatch(showNotif({ message: error.response.data.message, type: 'error' }));

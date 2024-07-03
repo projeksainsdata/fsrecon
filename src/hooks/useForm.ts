@@ -11,11 +11,19 @@ const useFormData = (initialState: FormData, dataManage: DataManageFn | null = n
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
-        dataManage ? dataManage((prev) => ({ ...prev, [id]: value })) : setData((prev) => ({ ...prev, [id]: value }));
+        if (dataManage) {
+            setData((prev) => dataManage({ ...prev, [id]: value }));
+        } else {
+            setData((prev) => ({ ...prev, [id]: value }));
+        }
     };
 
     const handleChangeBulk = (newData: FormData) => {
-        dataManage ? dataManage((prev) => ({ ...prev, ...newData })) : setData((prev) => ({ ...prev, ...newData }));
+        if (dataManage) {
+            setData((prev) => dataManage({ ...prev, ...newData }));
+        } else {
+            setData((prev) => ({ ...prev, ...newData }));
+        }
     };
 
     return {
