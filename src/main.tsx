@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom/client';
 
 // Perfect Scrollbar
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -20,8 +20,13 @@ import store from './store/index';
 import App from './App';
 import Toast from './components/Toast/ToastPopup';
 import 'react-toastify/dist/ReactToastify.css';
+// register service worker
+import * as serviceWorkerRegistration from './registerServiceWorker';
 
-
+// Register service worker
+serviceWorkerRegistration.register({
+    bypassNodeEnvProduction: true,
+});
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <Suspense>
@@ -32,4 +37,3 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </Suspense>
     </React.StrictMode>
 );
-

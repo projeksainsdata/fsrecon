@@ -8,6 +8,7 @@ import Header from './Header';
 import Setting from './Setting';
 import Sidebar from './Sidebar';
 import Portals from '../../components/Portals';
+import NotificationSettingsGroup from '../Notification/RequestNotification';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
@@ -74,13 +75,13 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                     )}
                 </div>
 
-
                 <div className={`${themeConfig.navbar} main-container text-black dark:text-white-dark min-h-screen`}>
                     {/* BEGIN SIDEBAR */}
                     <Sidebar />
                     {/* END SIDEBAR */}
 
                     <div className="main-content flex flex-col min-h-screen">
+                        <NotificationSettingsGroup />
                         {/* BEGIN TOP NAVBAR */}
                         <Header />
                         {/* END TOP NAVBAR */}

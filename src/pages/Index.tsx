@@ -1,8 +1,7 @@
 const Index = () => {
-
     return (
-        <div>
-            <h1>starter page</h1>
+        <div className="max-w-screen max-h-screen">
+            <h1>Index</h1>
         </div>
     );
 };
