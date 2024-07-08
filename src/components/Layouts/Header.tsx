@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { IRootState } from '../../store';
-import {  toggleTheme, toggleSidebar } from '../../store/themeConfigSlice';
+import { toggleTheme, toggleSidebar } from '../../store/themeConfigSlice';
 import { useTranslation } from 'react-i18next';
 import Dropdown from '../Dropdown';
 import IconMenu from '../Icon/IconMenu';
@@ -61,7 +61,7 @@ const Header = () => {
     const [notifications, setNotifications] = useState([] as any);
 
     useEffect(() => {
-        axiosApiInstance.get('/notifications').then((res) => {
+        axiosApiInstance.get('/api/notifications').then((res) => {
             setNotifications(res.data);
         });
     }, []);
@@ -203,7 +203,7 @@ const Header = () => {
                                         </div>
                                     </li>
 
-                                        <>
+                                    <>
                                         <li onClick={(e) => e.stopPropagation()}>
                                             <button type="button" className="!grid place-content-center hover:!bg-transparent text-lg min-h-[200px]">
                                                 <div className="mx-auto ring-4 ring-primary/30 rounded-full mb-4 text-primary">
@@ -212,8 +212,7 @@ const Header = () => {
                                                 No data available.
                                             </button>
                                         </li>
-                                        </>
-
+                                    </>
                                 </ul>
                             </Dropdown>
                         </div>
