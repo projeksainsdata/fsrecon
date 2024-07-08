@@ -38,6 +38,7 @@ workbox.routing.registerRoute(new RegExp('https://jsonplaceholder.typicode.com/p
 // Set workbox strategy
 workbox.routing.registerRoute(new RegExp('https://jsonplaceholder.typicode.com/todos'), new workbox.strategies.NetworkFirst());
 
+
 precacheAndRoute(self.__WB_MANIFEST);
 
 // Cache first strategy
@@ -125,6 +126,8 @@ registerRoute(
 );
 
 clientsClaim();
+
+
 
 self.addEventListener('fetch', (event) => {
     event.respondWith(

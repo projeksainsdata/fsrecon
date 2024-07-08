@@ -9,12 +9,28 @@ export default defineConfig({
         react(),
         VitePWA({
             strategies: 'injectManifest',
-            srcDir: 'src/',
-            filename: 'sw.ts',
+            filename: 'sw.js',
             injectRegister: false,
             devOptions: {
                 enabled: true,
                 type: 'module',
+            },
+            workbox: {
+                skipWaiting: true,
+                clientsClaim: true,
+                runtimeCaching: [
+                    {
+                        urlPattern: /^https?.*/,
+                        handler: 'StaleWhileRevalidate',
+                        options: {
+                            cacheName: 'offlineCache',
+                            expiration: {
+                                maxEntries: 200,
+                            },
+                        },
+                    },
+                ],
+
             },
         }),
     ],

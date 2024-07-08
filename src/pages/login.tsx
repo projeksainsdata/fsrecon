@@ -47,10 +47,12 @@ const Login = () => {
             dispatch(showNotif({ message: `Login Success`, type: 'success' }));
             setLoading(false);
             navigate('/');
-        } catch (error:any) {
+        } catch (error: any) {
             // check if error from api
             if (error.response) {
                 dispatch(showNotif({ message: error.response.data.message, type: 'error' }));
+            } else {
+                dispatch(showNotif({ message: error.message, type: 'error' }));
             }
             setLoading(false);
         } finally {
