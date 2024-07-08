@@ -1,25 +1,76 @@
 {
-  "short_name": "VRISTO - Multipurpose Tailwind Dashboard Template",
-  "name": "VRISTO - Multipurpose Tailwind Dashboard Template",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+    "short_name": "FSRECON - Fakultas Sains ITERA - Conference",
+    "name": "FSRECON - Fakultas Sains ITERA - Conference",
+    "description": "FSRECON -  Website Conference Fakultas Sains ITERA - Institut Teknologi Sumatera - Lampung - Indonesia",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "logo192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "logo512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0e1726",
+    "theme_color": "#121a2a",
+    "orientation": "portrait",
+    "scope": "/",
+    "lang": "id-ID",
+    "dir": "ltr",
+    "prefer_related_applications": false,
+    "categories": ["education", "conference", "science", "technology", "research"],
+    "serviceworker": {
+        "src": "sw.js",
+        "scope": "/",
+        "type": "module"
     },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+    "related_applications": [],
+    "permissions": ["clipboard-write", "clipboard-read", "notifications", "push", "background-fetch", "background-sync", "storage"],
+    "web_accessible_resources": ["manifest.json"],
+    "shortcuts": [
+        {
+            "name": "FSRECON - Fakultas Sains ITERA - Conference",
+            "short_name": "FSRECON - Fakultas Sains ITERA - Conference",
+            "description": "FSRECON -  Website Conference Fakultas Sains ITERA - Institut Teknologi Sumatera - Lampung - Indonesia",
+            "url": "/",
+            "icons": [
+                {
+                    "src": "favicon.ico",
+                    "sizes": "64x64 32x32 24x24 16x16",
+                    "type": "image/x-icon"
+                },
+                {
+                    "src": "logo192.png",
+                    "type": "image/png",
+                    "sizes": "192x192"
+                },
+                {
+                    "src": "logo512.png",
+                    "type": "image/png",
+                    "sizes": "512x512"
+                }
+            ]
+        }
+    ],
+    "share_target": {
+        "action": "/share-target",
+        "method": "GET",
+        "enctype": "application/x-www-form-urlencoded",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "url"
+        }
     },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+    "features": []
 }
